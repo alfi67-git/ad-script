@@ -27,7 +27,13 @@ foreach ($user in $CSVdata){
     $loginUser = $login.ToLower()
 
 	# Create user account in the Active Directory with the global password, user will have to change the password after the first login
-    New-ADUser -SamAccountName $loginUser -UserPrincipalName "$loginUser@domain.local" -Name "$surnameUtilisateur $nameUtilisateur" -GivenName $nameUser -Surname $surnameUser -AccountPassword (ConvertTo-SecureString $GlobalPassword -AsPlainText -Force) -Enabled $true -ChangePasswordAtLogon $true -Path "OU=$locationOU,DC=domain,DC=local"
+    New-ADUser `
+    	-SamAccountName $loginUser `
+     	-UserPrincipalName "$loginUser@domain.local" `
+      	-Name "$surnameUtilisateur $nameUtilisateur" `
+       	-GivenName $nameUser -Surname $surnameUser `
+	-AccountPassword (ConvertTo-SecureString $GlobalPassword -AsPlainText -Force) `
+ 	-Enabled $true -ChangePasswordAtLogon $true -Path "OU=$locationOU,DC=domain,DC=local"
 }
 
 Write-Host "User creation ended with success."
